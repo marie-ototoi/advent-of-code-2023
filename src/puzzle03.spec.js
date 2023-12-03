@@ -35,4 +35,13 @@ describe("puzzle 3", () => {
       expect(hasSymbolAboveOrUnder(2, 3, grid)).toBe(true);
     });
   });
+  describe("part B", () => {
+    test("should find and add gear numbers", () => {
+      expect(addGearNumbers(grid)).toBe(467835);
+    });
+
+    test("should return adjacent gear", () => {
+      expect(getGear(0, 3, grid)).toBe("1,3");
+    });
+  });
 });
