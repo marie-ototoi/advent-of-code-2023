@@ -5,7 +5,7 @@ import {
   lineToJson,
   sumScratchcardsValues,
   countScratchcards,
-} from "./puzzle04-utils";
+} from "./utils";
 
 describe("puzzle 4", () => {
   describe("part A", () => {

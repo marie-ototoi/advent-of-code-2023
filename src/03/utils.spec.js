@@ -5,7 +5,7 @@ import {
   hasSymbolAboveOrUnder,
   addGearNumbers,
   getGear,
-} from "./puzzle03-utils";
+} from "./utils";
 
 describe("puzzle 3", () => {
   const grid = [

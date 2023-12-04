@@ -4,7 +4,7 @@ import {
   findSumOfFirstAndLastDigits,
   findFirstAndLastDigitsWithLetters,
   findSumOfFirstAndLastDigitsWithLetters,
-} from "./puzzle01-utils";
+} from "./utils";
 
 describe("puzzle 1", () => {
   test("find first and last digits at ends", () => {

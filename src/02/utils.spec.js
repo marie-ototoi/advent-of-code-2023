@@ -6,7 +6,7 @@ import {
   getMinimumSet,
   getPower,
   addPowerOfMinimumSets,
-} from "./puzzle02-utils";
+} from "./utils";
 
 describe("puzzle 2", () => {
   describe("part A", () => {

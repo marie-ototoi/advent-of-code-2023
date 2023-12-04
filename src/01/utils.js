@@ -43,7 +43,7 @@ export function findSumOfFirstAndLastDigits(inputs) {
 
 export function findSumOfFirstAndLastDigitsWithLetters(inputs) {
   return inputs.reduce((acc, cur) => {
-    console.log(cur, findFirstAndLastDigitsWithLetters(cur));
+    // console.log(cur, findFirstAndLastDigitsWithLetters(cur));
     return acc + findFirstAndLastDigitsWithLetters(cur);
   }, 0);
 }
