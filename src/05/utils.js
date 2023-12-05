@@ -54,3 +54,20 @@ export function findMinimumTransformedSeed(input) {
   const { seeds, maps } = retrieveSeedsAndMaps(input);
   return Math.min(...seeds.map((seed) => transformSeed(seed, maps)));
 }
+
+export function findMinimumTransformedSeedInRanges(input) {
+  const { seeds, maps, maxDecr } = retrieveSeedsAndMaps(input);
+  let min = Number.POSITIVE_INFINITY;
+  seeds.forEach((cur, ind) => {
+    if (ind % 2 !== 0) {
+      const start = seeds[ind - 1];
+      for (let i = start; i < start + cur; i++) {
+        if (i + maxDecr < min) {
+          const ts = transformSeed(i, maps);
+          if (ts < min) min = ts;
+        }
+      }
+    }
+  });
+  return min;
+}

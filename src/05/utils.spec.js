@@ -3,6 +3,7 @@ import {
   retrieveSeedsAndMaps,
   transformSeed,
   findMinimumTransformedSeed,
+  findMinimumTransformedSeedInRanges,
 } from "./utils";
 
 describe("puzzle 5", () => {
@@ -87,6 +88,11 @@ describe("puzzle 5", () => {
     });
     test("should find minimum transformed seed", () => {
       expect(findMinimumTransformedSeed(example)).toEqual(35);
+    });
+  });
+  describe("part B", () => {
+    test("should find minimum transformed seed in range", () => {
+      expect(findMinimumTransformedSeedInRanges(example)).toEqual(46);
     });
   });
 });
