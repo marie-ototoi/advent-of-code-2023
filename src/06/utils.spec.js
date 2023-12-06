@@ -1,8 +1,10 @@
 import { describe, expect, test } from "vitest";
 import {
   inputToRaces,
+  inputToRace,
   multiplyCountOfPossibleStrategies,
   countPossibleStrategies,
+  getCountOfPossibleStrategies,
 } from "./utils";
 
 describe("puzzle 6", () => {
@@ -26,6 +28,21 @@ describe("puzzle 6", () => {
         [15, 40],
         [30, 200],
       ]);
+    });
+  });
+  describe("part B", () => {
+    test("should transform input into single race", () => {
+      expect(
+        inputToRace(["Time:      7  15   30", "Distance:  9  40  200"])
+      ).toEqual([71530, 940200]);
+    });
+    test("should transform input into single race", () => {
+      expect(
+        getCountOfPossibleStrategies([
+          "Time:      7  15   30",
+          "Distance:  9  40  200",
+        ])
+      ).toEqual(71503);
     });
   });
 });

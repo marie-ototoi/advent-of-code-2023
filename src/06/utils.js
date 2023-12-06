@@ -31,9 +31,20 @@ export function inputToRaces(input) {
   }, []);
 }
 
+export function inputToRace(input) {
+  const time = parseInt(input[0].split("Time:")[1].replace(/\s/g, ""));
+  const distance = parseInt(input[1].split("Distance:")[1].replace(/\s/g, ""));
+  return [time, distance];
+}
+
 export function multiplyCountOfPossibleStrategies(input) {
   const game = inputToRaces(input);
   return game.reduce((acc, cur) => {
     return acc * countPossibleStrategies(...cur);
   }, 1);
+}
+
+export function getCountOfPossibleStrategies(input) {
+  const race = inputToRace(input);
+  return countPossibleStrategies(...race);
 }
