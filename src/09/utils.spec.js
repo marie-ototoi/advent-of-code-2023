@@ -19,4 +19,18 @@ describe("puzzle 9", () => {
       ).toEqual(18 + 28 + 68);
     });
   });
+  describe("part B", () => {
+    test.only("should find previous value", () => {
+      expect(findPreviousValue("10 13 16 21 30 45")).toEqual(5);
+    });
+    test("should add next values", () => {
+      expect(
+        addPreviousValues([
+          "0 3 6 9 12 15",
+          "1 3 6 10 15 21",
+          "10 13 16 21 30 45",
+        ])
+      ).toEqual(2);
+    });
+  });
 });
