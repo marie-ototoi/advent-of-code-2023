@@ -4,6 +4,8 @@ import {
   findShortestPath,
   findAllPairs,
   sumShortestPaths,
+  sumShortestExpandedPaths,
+  findEmptyRowsAndCols,
 } from "./utils";
 
 describe("puzzle 11", () => {
@@ -67,6 +69,30 @@ describe("puzzle 11", () => {
     });
     test("should sum shortest paths in galaxy", () => {
       expect(sumShortestPaths(galaxy)).toEqual(374);
+    });
+  });
+  describe("part B", () => {
+    test("should find empty rows and cols", () => {
+      expect(findEmptyRowsAndCols(galaxy)).toEqual({
+        cols: [2, 5, 8],
+        rows: [3, 7],
+        points: [
+          [3, 0],
+          [7, 1],
+          [0, 2],
+          [6, 4],
+          [1, 5],
+          [9, 6],
+          [7, 8],
+          [0, 9],
+          [4, 9],
+        ],
+      });
+    });
+    test("should sum shortest paths in expanded galaxy", () => {
+      expect(sumShortestExpandedPaths(galaxy, 2)).toEqual(374);
+      expect(sumShortestExpandedPaths(galaxy, 10)).toEqual(1030);
+      expect(sumShortestExpandedPaths(galaxy, 100)).toEqual(8410);
     });
   });
 });
