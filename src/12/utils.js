@@ -68,3 +68,82 @@ export function readLine(line) {
   const read = line.split(" ");
   return [read[0], read[1].split(",").map((n) => parseInt(n))];
 }
+
+export function unfoldLine(line) {
+  const read = line.split(" ");
+  const pattern = read[0];
+  const groups = read[1].split(",").map((n) => parseInt(n));
+  return [
+    [pattern, pattern, pattern, pattern, pattern].join("?"),
+    [...groups, ...groups, ...groups, ...groups, ...groups],
+  ];
+}
+
+const memo = new Map();
+
+export function countPossibleUnfoldedArrangements(pattern, groups) {
+  if (memo.has(`${pattern},${groups.join(":")}`))
+    return memo.get(`${pattern},${groups.join(":")}`);
+
+  // if pattern and groups finish at the same time
+  if (pattern.length === 0 && groups.length === 0) {
+    return 1;
+  }
+  // else if pattern finishes before groups => impossible
+  if (pattern.length === 0 && groups.length > 0) {
+    return 0;
+  }
+  // if groups are finished
+  if (groups.length === 0) {
+    // if there are # left in the following => impossible
+    if (pattern.includes("#")) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  // not enough chars left
+  if (
+    pattern.length <
+    groups.reduce((acc, cur) => acc + cur, 0) + groups.length - 1
+  ) {
+    return 0;
+  }
+
+  if (pattern[0] === ".") {
+    const count = countPossibleUnfoldedArrangements(pattern.slice(1), groups);
+    memo.set(`${pattern},${groups.join(":")}`, count);
+    return count;
+  }
+
+  if (pattern[0] === "#") {
+    const [currentGroupLength, ...remainingGroups] = groups;
+    // if not only # in the groups => impossible
+    if (pattern.substring(0, currentGroupLength).includes(".")) return 0;
+
+    // groups not followed by a . => impossible
+    if (pattern[currentGroupLength] === "#") return 0;
+
+    const count = countPossibleUnfoldedArrangements(
+      pattern.slice(currentGroupLength + 1),
+      remainingGroups
+    );
+    memo.set(`${pattern},${groups.join(":")}`, count);
+    return count;
+  }
+
+  // if current is ?, try both # and .
+  const count =
+    countPossibleUnfoldedArrangements("#" + pattern.slice(1), groups) +
+    countPossibleUnfoldedArrangements("." + pattern.slice(1), groups);
+  memo.set(`${pattern},${groups.join(":")}`, count);
+  return count;
+}
+
+export function sumPossibleUnfoldedArrangements(input) {
+  return input.reduce((acc, cur) => {
+    const arr = countPossibleUnfoldedArrangements(...unfoldLine(cur));
+    return acc + arr;
+  }, 0);
+}

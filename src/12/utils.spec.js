@@ -43,4 +43,49 @@ describe("puzzle 12", () => {
       ).toBe(21);
     });
   });
+  describe("part B", () => {
+    test("should unfold information", () => {
+      expect(unfoldLine(line1)).toEqual([
+        "???.###????.###????.###????.###????.###",
+        [1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3],
+      ]);
+    });
+    test("should mark valid combination", () => {
+      expect(isValid("#.#.###", [1, 1, 3])).toBe(true);
+    });
+    test("should mark possible combination", () => {
+      expect(isPossible("#.?.###", [1, 1, 3])).toBe(true);
+      expect(isPossible("#.##?.?##", [1, 3, 3])).toBe(true);
+    });
+    test("should mark impossible combination", () => {
+      expect(isPossible("##.?.###", [1, 1, 3])).toBe(false);
+      expect(isPossible("#.##.?##", [1, 1, 3])).toBe(false);
+    });
+    test("should count possible combinations", () => {
+      expect(countPossibleUnfoldedArrangements(...unfoldLine(line1))).toBe(1);
+      expect(
+        countPossibleUnfoldedArrangements(...unfoldLine(line2), true)
+      ).toBe(16384);
+      expect(countPossibleUnfoldedArrangements(...unfoldLine(line3))).toBe(1);
+      expect(countPossibleUnfoldedArrangements(...unfoldLine(line4))).toBe(16);
+      expect(countPossibleUnfoldedArrangements(...unfoldLine(line5))).toBe(
+        2500
+      );
+      expect(
+        countPossibleUnfoldedArrangements(...unfoldLine(line6), true)
+      ).toBe(506250);
+    });
+    test.only("should sum possible unfolded combinations", () => {
+      expect(
+        sumPossibleUnfoldedArrangements([
+          line1,
+          line2,
+          line3,
+          line4,
+          line5,
+          line6,
+        ])
+      ).toBe(525152);
+    });
+  });
 });
