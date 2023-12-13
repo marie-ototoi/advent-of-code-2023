@@ -7,7 +7,7 @@ import {
   summarizeSmudgeNotes,
 } from "./utils";
 
-describe("puzzle 12", () => {
+describe("puzzle 13", () => {
   const line1 = "???.### 1,1,3";
   const line2 = ".??..??...?##. 1,1,3";
   const line3 = ".??..??...?##. 1,1,3";
