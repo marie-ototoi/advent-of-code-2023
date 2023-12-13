@@ -47,4 +47,43 @@ describe("puzzle 12", () => {
       expect(summarizeNotes([...note1, "", ...note2])).toEqual(405);
     });
   });
+  describe("part B", () => {
+    test("should find smudge", () => {
+      const smudge1 = [
+        "..##..##.",
+        "..#.##.#.",
+        "##......#",
+        "##......#",
+        "..#.##.#.",
+        "..##..##.",
+        "#.#.##.#.",
+      ];
+      const smudge2 = [
+        "#...##..#",
+        "#...##..#",
+        "..##..###",
+        "#####.##.",
+        "#####.##.",
+        "..##..###",
+        "#....#..#",
+      ];
+      const note3 = [
+        "....#....##..##..",
+        "##.#.....#....#..",
+        "....##...#.##.#..",
+        "..##..#####..####",
+        "###..##..######..",
+        ".....##.#.#..#.#.",
+        ".#.#####.##..##.#",
+        "###.###...####...",
+        "....####.#....#.#",
+      ];
+      expect(findSmudge(note1)).toEqual([0, 3]);
+      expect(findSmudge(note2)).toEqual([0, 1]);
+      expect(findSmudge(note3)).toEqual([1, 0]);
+    });
+    test("should summarize smudge notes", () => {
+      expect(summarizeSmudgeNotes([...note1, "", ...note2])).toEqual(400);
+    });
+  });
 });
