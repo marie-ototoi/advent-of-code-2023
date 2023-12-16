@@ -43,3 +43,49 @@ export function sumRockLoad(dish) {
     return acc + (dish.length - ind) * rocksInRow;
   }, 0);
 }
+
+export function summarizeRockPositions(dish) {
+  const result = [];
+  for (let i = 0; i < dish.length; i++) {
+    const line = [];
+    for (let j = 0; j < dish[i].length; j++) {
+      if (dish[i][j] === "O") line.push(j);
+    }
+    result.push(line.join(","));
+  }
+  return result.join(":");
+}
+
+export function findCyclesRepeating(dish) {
+  let repeating;
+  let memo = new Map();
+  let i = 0;
+  let newDish = dish;
+  while (!repeating) {
+    // make a cycle
+    newDish = moveRocks(newDish, 0, true);
+    // save result
+    const summary = summarizeRockPositions(newDish);
+    if (memo.has(summary)) {
+      repeating = [memo.get(summary), i - memo.get(summary)];
+    } else {
+      memo.set(summary, i);
+    }
+    i++;
+  }
+  return repeating;
+}
+
+export function findLoadAfterCycles(dish, cycles) {
+  const [firstRepeating, cycleLength] = findCyclesRepeating(dish);
+  const restAfterCycles = (cycles - firstRepeating) % cycleLength;
+  const cyclesToRun = firstRepeating + restAfterCycles;
+  let newDish = [...dish];
+  for (let i = 0; i < cyclesToRun; i++) {
+    newDish = moveRocks(newDish, 0, true);
+  }
+  return newDish.reduce((acc, cur, ind) => {
+    const rocksInRow = cur.replace(/[^O]/g, "").length;
+    return acc + (dish.length - ind) * rocksInRow;
+  }, 0);
+}
