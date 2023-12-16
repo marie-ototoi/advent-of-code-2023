@@ -1,5 +1,12 @@
 import { describe, expect, test } from "vitest";
-import { runHash, sumHashes } from "./utils";
+import {
+  runHash,
+  sumHashes,
+  operateBox,
+  operateBoxes,
+  sumFocusPower,
+  operateBoxesAndSumPower,
+} from "./utils";
 
 describe("puzzle 15", () => {
   const init = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7";
@@ -32,6 +39,35 @@ describe("puzzle 15", () => {
 
     test("should sum hashes", () => {
       expect(sumHashes(init)).toEqual(1320);
+    });
+  });
+  describe("part B", () => {
+    test("should get hash result", () => {
+      expect(runHash("rn")).toEqual(0);
+      expect(runHash("cm")).toEqual(0);
+      expect(runHash("qp")).toEqual(1);
+      expect(runHash("pc")).toEqual(3);
+    });
+    test("should operate change on box", () => {
+      expect(operateBox({}, "rn=1")).toEqual({ rn: [1, 1] });
+      expect(operateBox({ rn: [1, 1] }, "cm-")).toEqual({ rn: [1, 1] });
+      expect(operateBox({}, "qp=3")).toEqual({ qp: [3, 1] });
+      expect(operateBox({ rn: [1, 1] }, "cm=2")).toEqual({
+        rn: [1, 1],
+        cm: [2, 2],
+      });
+    });
+    test("should operate instructions on new set of boxes", () => {
+      const newBoxes = operateBoxes(init);
+      expect(newBoxes[0]).toEqual({ rn: [1, 1], cm: [2, 2] });
+      expect(newBoxes[3]).toEqual({ ot: [7, 1], ab: [5, 2], pc: [6, 3] });
+    });
+    test("should get focus Power", () => {
+      const newBoxes = operateBoxes(init);
+      expect(sumFocusPower(newBoxes)).toEqual(145);
+    });
+    test("should operate boxes and sum focus Power", () => {
+      expect(operateBoxesAndSumPower(init)).toEqual(145);
     });
   });
 });
