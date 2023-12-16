@@ -54,4 +54,9 @@ describe("puzzle 16", () => {
       expect(countEnergizedTiles([-1, 0], [1, 0], input)).toEqual(46);
     });
   });
+  describe("part B", () => {
+    test("should find maximum energized tiles", () => {
+      expect(findMaxEnergizedTiles(input)).toEqual(51);
+    });
+  });
 });

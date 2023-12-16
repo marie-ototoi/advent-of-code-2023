@@ -117,3 +117,19 @@ export function countEnergizedTiles(startPoint, startDirection, input) {
   }
   return energized.size;
 }
+
+export function findMaxEnergizedTiles(input) {
+  let max = Number.NEGATIVE_INFINITY;
+  for (let i = 0; i < input.length; i++) {
+    max = Math.max(max, countEnergizedTiles([-1, i], right, input));
+    max = Math.max(max, countEnergizedTiles([input[0].length, i], left, input));
+    for (let j = 0; j < input[i].length; j++) {
+      max = Math.max(max, countEnergizedTiles([j, -1], bottom, input));
+      max = Math.max(
+        max,
+        countEnergizedTiles([j, input[i].length], top, input)
+      );
+    }
+  }
+  return max;
+}
