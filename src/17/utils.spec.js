@@ -33,4 +33,37 @@ describe("puzzle 17", () => {
       expect(getMinimumLoss(city)).toEqual(102);
     });
   });
+
+  describe("part B", () => {
+    test("should get next direction", () => {
+      expect(getNextPointsAndDirections([3, 0], right, 3, city, true)).toEqual([
+        [[4, 0], right, 4],
+      ]);
+      expect(getNextPointsAndDirections([3, 1], right, 3, city, true)).toEqual([
+        [[4, 1], right, 4],
+      ]);
+      expect(getNextPointsAndDirections([3, 0], right, 4, city, true)).toEqual([
+        [[4, 0], right, 5],
+        [[3, 1], bottom, 1],
+      ]);
+      expect(getNextPointsAndDirections([3, 1], right, 4, city, true)).toEqual([
+        [[3, 0], top, 1],
+        [[4, 1], right, 5],
+        [[3, 2], bottom, 1],
+      ]);
+      expect(
+        getNextPointsAndDirections([10, 0], right, 10, city, true)
+      ).toEqual([[[10, 1], bottom, 1]]);
+      expect(
+        getNextPointsAndDirections([10, 1], right, 10, city, true)
+      ).toEqual([
+        [[10, 0], top, 1],
+        [[10, 2], bottom, 1],
+      ]);
+    });
+
+    test("should compute minimum loss", () => {
+      expect(getMinimumLoss(city, true)).toEqual(94);
+    });
+  });
 });

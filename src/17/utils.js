@@ -12,7 +12,8 @@ export function getNextPointsAndDirections(
   currentPoint,
   currentDirection,
   step,
-  input
+  input,
+  ultra
 ) {
   const results = [];
   for (const direction of directions) {
@@ -24,13 +25,18 @@ export function getNextPointsAndDirections(
     const oppositeDirection =
       (direction[0] !== 0 && direction[0] === currentDirection[0] * -1) ||
       (direction[1] !== 0 && direction[1] === currentDirection[1] * -1);
+    // same direction only if step less than 3
+    const okWithoutUltra = !ultra && (!sameDirection || step < 3);
+    // other direction only if step > 4
+    // same direction only if step < 10
+    const okWithUltra =
+      ultra && ((!sameDirection && step >= 4) || (sameDirection && step < 10));
 
     if (
       isValid(nextPoint[0], nextPoint[1], input) &&
       // no opposite direction
       !oppositeDirection &&
-      // same direction only if step less than 3
-      (!sameDirection || step < 3)
+      (okWithoutUltra || okWithUltra)
     ) {
       results.push([nextPoint, direction, sameDirection ? step + 1 : 1]);
     }
@@ -38,7 +44,7 @@ export function getNextPointsAndDirections(
   return results;
 }
 
-export function getMinimumLoss(input) {
+export function getMinimumLoss(input, ultra) {
   const seen = new Map();
   let minLoad = Number.POSITIVE_INFINITY;
   let queue = [[[0, 0], right, 0, -1 * input[0][0]]];
@@ -79,7 +85,8 @@ export function getMinimumLoss(input) {
               currentPoint,
               currentDirection,
               currentSteps,
-              input
+              input,
+              ultra
             );
 
             for (const [nextPoint, nextDirection, nextSteps] of next) {
