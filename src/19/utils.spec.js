@@ -4,6 +4,9 @@ import {
   findDestination,
   sumRatings,
   sumAcceptedPartsRatings,
+  getRanges,
+  countAcceptedCombinations,
+  findRangesAndCountAcceptedCombinations,
 } from "./utils";
 
 describe("puzzle 19", () => {
@@ -79,6 +82,25 @@ describe("puzzle 19", () => {
     });
     test("should sum accepted parts", () => {
       expect(sumAcceptedPartsRatings(input)).toEqual(19114);
+    });
+  });
+  describe("part A", () => {
+    const ranges = [
+      { name: "a", ranges: [1, 1717, 2006, 4001] },
+      { name: "s", ranges: [1, 537, 1351, 2771, 3449, 4001] },
+      { name: "m", ranges: [1, 839, 1801, 2091, 4001] },
+      { name: "x", ranges: [1, 1416, 2441, 2663, 4001] },
+    ];
+    test("should get ranges", () => {
+      expect(getRanges(rules)).toEqual(ranges);
+    });
+    test("should count accepted combinations", () => {
+      expect(countAcceptedCombinations(ranges, rules)).toEqual(167409079868000);
+    });
+    test("should find ranges and count accepted combinations", () => {
+      expect(findRangesAndCountAcceptedCombinations(input)).toEqual(
+        167409079868000
+      );
     });
   });
 });

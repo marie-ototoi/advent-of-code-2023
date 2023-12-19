@@ -79,3 +79,57 @@ export function sumAcceptedPartsRatings(input) {
     return acc + (dest === "A" ? sumRatings(cur) : 0);
   }, 0);
 }
+
+export function getRanges(rules) {
+  let ranges = { a: [1, 4001], s: [1, 4001], m: [1, 4001], x: [1, 4001] };
+  Array.from(Object.keys(rules)).forEach((name) => {
+    const conditions = rules[name];
+    conditions.forEach((condition) => {
+      if (condition.name) {
+        if (condition.op === "<") {
+          ranges[condition.name].push(condition.val);
+        } else if (condition.op === ">") {
+          ranges[condition.name].push(condition.val + 1);
+        }
+      }
+    });
+  });
+  return Array.from(Object.keys(ranges)).map((name) => {
+    return { name, ranges: ranges[name].sort((a, b) => a - b) };
+  });
+}
+
+export function countAcceptedCombinations(ranges, rules) {
+  let result = 0;
+  for (let i = 0; i < ranges[0].ranges.length - 1; i++) {
+    //console.log(ranges[0].ranges[i]);
+    for (let j = 0; j < ranges[1].ranges.length - 1; j++) {
+      for (let k = 0; k < ranges[2].ranges.length - 1; k++) {
+        for (let l = 0; l < ranges[3].ranges.length - 1; l++) {
+          const part = {};
+          part[ranges[0].name] = ranges[0].ranges[i];
+          part[ranges[1].name] = ranges[1].ranges[j];
+          part[ranges[2].name] = ranges[2].ranges[k];
+          part[ranges[3].name] = ranges[3].ranges[l];
+          const accepted = findDestination(part, rules, "in") === "A";
+          //console.log({ part, accepted });
+          if (accepted) {
+            result +=
+              (ranges[0].ranges[i + 1] - ranges[0].ranges[i]) *
+              (ranges[1].ranges[j + 1] - ranges[1].ranges[j]) *
+              (ranges[2].ranges[k + 1] - ranges[2].ranges[k]) *
+              (ranges[3].ranges[l + 1] - ranges[3].ranges[l]);
+          }
+        }
+      }
+    }
+  }
+  return result;
+}
+
+export function findRangesAndCountAcceptedCombinations(input) {
+  const { rules } = getPartsAndRules(input);
+  const ranges = getRanges(rules);
+  //console.log(ranges);
+  return countAcceptedCombinations(ranges, rules);
+}
